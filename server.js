@@ -153,7 +153,7 @@ app.post('/v1/chat/completions', async (req, res) => {
       messages: messages,
       temperature: temperature !== undefined ? temperature : 0.6,
       max_tokens: max_tokens || 30000,
-      stream: stream || true
+      stream: stream || false
     };
 
     if (ENABLE_THINKING_MODE) {
