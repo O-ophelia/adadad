@@ -157,7 +157,7 @@ app.post('/v1/chat/completions', async (req, res) => {
     };
 
     if (ENABLE_THINKING_MODE) {
-      nimRequest.extra_body = {     "chat_template_kwargs": {         "enable_thinking": true,         "clear_thinking": false     } } 
+      nimRequest.extra_body = {     "chat_template_kwargs": {         "enable_thinking": true,            } } 
     }
     
     console.log('Sending request to NVIDIA NIM:', JSON.stringify(nimRequest, null, 2));
