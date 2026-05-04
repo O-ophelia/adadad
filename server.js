@@ -35,7 +35,7 @@ const MODEL_MAPPING = {
   'gpt-4o': 'deepseek-ai/deepseek-v4-flash',
   'google/gemma-4-31b-it': 'z-ai/glm4.7',
   'claude-3-sonnet': 'moonshotai/kimi-k2-thinking',
-  'gemini-pro': 'moonshotai/kimi-k2.5'
+  'gemini-pro': 'moonshotai/kimi-k2.6'
 };
 
 // Root endpoint
