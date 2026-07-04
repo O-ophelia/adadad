@@ -31,9 +31,9 @@ const ENABLE_THINKING_MODE = true; // Set to true to enable chat_template_kwargs
 const MODEL_MAPPING = {
   'moonshotai/kimi-k2-thinking': 'nvidia/llama-3.1-nemotron-ultra-253b-v1',
   'gpt-4': 'deepseek-ai/deepseek-v3.1-terminus',
-  'gpt-4-turbo': 'deepseek-ai/deepseek-v3.2',
+  'gpt-4-turbo': 'deepseek-ai/deepseek-v4',
   'gpt-4o': 'deepseek-ai/deepseek-v4-flash',
-  'google/gemma-4-31b-it': 'z-ai/glm4.7',
+  'google/gemma-4-31b-it': 'z-ai/glm5.2',
   'claude-3-sonnet': 'moonshotai/kimi-k2-thinking',
   'gemini-pro': 'moonshotai/kimi-k2.6'
 };
