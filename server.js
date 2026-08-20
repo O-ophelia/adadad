@@ -25,7 +25,7 @@ const NIM_API_KEY = process.env.NIM_API_KEY;
 const SHOW_REASONING = true; // Set to true to show reasoning with <think> tags
 
 // 🔥 THINKING MODE TOGGLE - Enables thinking for specific models that support it
-const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwargs thinking parameter
+const ENABLE_THINKING_MODE = true; // Set to true to enable chat_template_kwargs thinking parameter
 
 // Model mapping (adjust based on available NIM models)
 const MODEL_MAPPING = {
@@ -157,8 +157,27 @@ app.post('/v1/chat/completions', async (req, res) => {
     };
 
     if (ENABLE_THINKING_MODE) {
-      nimRequest.extra_body = { chat_template_kwargs: { thinking: true } };
+  // 1. Completely strip out the invalid extra_body property so NVIDIA doesn't throw a 400 error
+  if (nimRequest.extra_body) {
+    delete nimRequest.extra_body;
+  }
+  
+  // 2. Safely trigger GLM-5.2's native reasoning mode via prompt injection
+  if (nimRequest.messages && nimRequest.messages.length > 0) {
+    // Locate the system prompt (usually the first message)
+    const systemMessage = nimRequest.messages.find(msg => msg.role === 'system');
+    
+    if (systemMessage) {
+      systemMessage.content = `[System instructions: Trigger your maximum reasoning effort. Output your full chain of thought reasoning steps inside <think></think> tags before your final response.]\n${systemMessage.content}`;
+    } else {
+      // If there is no system prompt yet, inject one at the front
+      nimRequest.messages.unshift({
+        role: 'system',
+        content: '[System instructions: Trigger your maximum reasoning effort. Output your full chain of thought reasoning steps inside <think></think> tags before your final response.]'
+      });
     }
+  }
+}
     
     console.log('Sending request to NVIDIA NIM:', JSON.stringify(nimRequest, null, 2));
     
